@@ -66,12 +66,6 @@ public class DriveToDistance extends AutoGoStraightCommand {
 	// Called once after isFinished returns true
 	@Override
 	protected boolean isFinished() {
-		/*if((-0.03 > Robot.oi.getSpeed())||(Robot.oi.getSpeed() > 0.03)){
-			return true;
-		}
-		if((-0.03 > Robot.oi.getTurn())||(Robot.oi.getTurn() > 0.03)) {
-			return true;
-		}*/
 		return (Math.abs(Robot.chassisSubsystem.getEncoderDistance()) >= Math.abs(distanceSetpoint) - AutoVariables.driveStopDistance);
 	}
 }
