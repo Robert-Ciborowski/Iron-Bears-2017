@@ -7,6 +7,7 @@ import climbercommands.ClimberOff;
 import edu.wpi.first.wpilibj.Spark;
 
 public class ClimberSubsystem extends M_Subsystem{
+	public static final double MAX_CURRENT = 15.0;
 	private Spark climberMotor = new Spark(RobotMap.climberMotorPort);
 	
 	public ClimberSubsystem() {

@@ -4,6 +4,7 @@ import org.usfirst.frc.team854.robot.Robot;
 import org.usfirst.frc.team854.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import subsystems.ClimberSubsystem;
 
 /**
  *
@@ -25,6 +26,10 @@ public class ClimberUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if (Robot.pdp.getCurrent(RobotMap.climberPDPChannel) >= ClimberSubsystem.MAX_CURRENT) {
+    		return true;
+    	}
+    	
         return false;
     }
 

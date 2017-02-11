@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -32,12 +33,14 @@ public class Robot extends IterativeRobot {
 	public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	public static OI oi;
+	public static PowerDistributionPanel pdp;
 	
 	public static List<M_Subsystem> subsystemList = new ArrayList<M_Subsystem>();
 
 	Command autonomousCommand;
 	
 	public void robotInit() {
+		pdp = new PowerDistributionPanel();
 		oi = new OI();
 		
 		// Add all the subsystems to the subsystem list.

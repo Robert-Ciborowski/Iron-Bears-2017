@@ -1,6 +1,8 @@
 package org.usfirst.frc.team854.robot;
 
 public class RobotMap {
+	public static int climberPDPChannel = 0;
+	
 	public static int leftMotorPort = 1;
 	public static int rightMotorPort = 0;
 	public static int intakeMotorPort = 4;
