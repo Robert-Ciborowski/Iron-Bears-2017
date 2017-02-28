@@ -1,7 +1,6 @@
 package shootercommands;
 
 import org.usfirst.frc.team854.robot.Robot;
-import org.usfirst.frc.team854.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -19,7 +18,7 @@ public class ShooterOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterSubsystem.setShooterSpeed(RobotMap.shooterSpeed);
+    	Robot.shooterSubsystem.setShooterSpeed(Robot.oi.getThrottle());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,6 +28,7 @@ public class ShooterOn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.shooterSubsystem.shooterOff();
     }
 
     // Called when another command which requires one or more of the same

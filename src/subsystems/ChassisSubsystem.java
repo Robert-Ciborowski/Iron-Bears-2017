@@ -18,6 +18,8 @@ public class ChassisSubsystem extends M_Subsystem {
 	
 	private Spark leftMotor = new Spark(RobotMap.rightMotorPort);
 	private Spark rightMotor = new Spark(RobotMap.leftMotorPort);
+	private Spark leftMiniCIM = new Spark(RobotMap.leftMiniCIMPort);
+	private Spark rightMiniCIM = new Spark(RobotMap.rightMiniCIMPort);
 	private Encoder leftEncoder = new Encoder(RobotMap.leftEncoder1, RobotMap.leftEncoder2);
 	private Encoder rightEncoder = new Encoder(RobotMap.rightEncoder1, RobotMap.rightEncoder2);
 	M_Gyro gyro = new M_Gyro(RobotMap.gyroPort);
@@ -31,6 +33,13 @@ public class ChassisSubsystem extends M_Subsystem {
 			return -leftEncoder.getRate() / RobotMap.leftEncoderMaxRate;
 		}
 	};
+	
+	M_PIDInput leftMiniCIMPIDInput = new M_PIDInput() {
+		@Override
+		public double pidGet() {
+			return -leftEncoder.getRate() / RobotMap.leftEncoderMaxRate;
+		}
+	};
 
 	M_PIDInput rightPIDInput = new M_PIDInput() {
 		@Override
@@ -38,23 +47,39 @@ public class ChassisSubsystem extends M_Subsystem {
 			return rightEncoder.getRate() / RobotMap.rightEncoderMaxRate;
 		}
 	};
+	
+	M_PIDInput rightMiniCIMPIDInput = new M_PIDInput() {
+		@Override
+		public double pidGet() {
+			return rightEncoder.getRate() / RobotMap.rightEncoderMaxRate;
+		}
+	};
 
-	M_PIDController leftMotorPID = new M_PIDController(1.0, 0, 0, 1.0, leftPIDInput, leftMotor);
+	M_PIDController leftMotorPID = new M_PIDController(0.05, 0, 0, 1.0, leftPIDInput, leftMotor);
 
-	M_PIDController rightMotorPID = new M_PIDController(1.0, 0, 0, 1.0, rightPIDInput, rightMotor);
+	M_PIDController rightMotorPID = new M_PIDController(0.05, 0, 0, 1.0, rightPIDInput, rightMotor);
 
+	M_PIDController leftMiniCIMMotorPID = new M_PIDController(0.05, 0, 0, 1.0, leftPIDInput, leftMiniCIM);
+
+	M_PIDController rightMiniCIMMotorPID = new M_PIDController(0.05, 0, 0, 1.0, rightPIDInput, rightMiniCIM);
+
+	
 	ArrayList<M_PIDController> pidControllers = new ArrayList<>();
 
 	//Motor inversions MUST be declared in the constructor!!!
     public ChassisSubsystem() {
     	leftMotor.setInverted(RobotMap.leftMotorInverted);
     	rightMotor.setInverted(RobotMap.rightMotorInverted);
+    	leftMiniCIM.setInverted(RobotMap.leftMiniCIMInverted);
+    	rightMiniCIM.setInverted(RobotMap.rightMiniCIMInverted);
     }
     
     //MIGHT NEED TO CALL THIS!
     public void init() {
     	pidControllers.add(leftMotorPID);
 		pidControllers.add(rightMotorPID);
+		pidControllers.add(leftMiniCIMMotorPID);
+		pidControllers.add(rightMiniCIMMotorPID);
 		
     	gyro.initGyro();
     	gyro.setSensitivity(RobotMap.gyroGain);
@@ -101,12 +126,20 @@ public class ChassisSubsystem extends M_Subsystem {
 		//If it doesn't drive, this is the likely culprit.
 		leftMotorPID.setSetpoint(leftSpeed);
 		rightMotorPID.setSetpoint(rightSpeed);
+		leftMiniCIMMotorPID.setSetpoint(-rightSpeed);//HAD TO SWITCH LEFT AND RIGHT TO GET RIGHT ONES!!!
+		rightMiniCIMMotorPID.setSetpoint(-leftSpeed);
 
 		if (!leftMotorPID.isEnabled()) {
 			leftMotorPID.enable();
 		}
 		if (!rightMotorPID.isEnabled()) {
 			rightMotorPID.enable();
+		}
+		if (!leftMiniCIMMotorPID.isEnabled()) {
+			leftMiniCIMMotorPID.enable();
+		}
+		if (!rightMiniCIMMotorPID.isEnabled()) {
+			rightMiniCIMMotorPID.enable();
 		}
     }
 

@@ -4,6 +4,9 @@ import org.usfirst.frc.team854.robot.RobotMap;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import shootercommands.ShooterOff;
+import shootercommands.ShooterOn;
 
 public class OI {
 	private Joystick joystick = new Joystick(RobotMap.joystickPort);
@@ -17,9 +20,18 @@ public class OI {
 			 		shooterOn = new JoystickButton(joystick,5),
 			 		shooterOff = new JoystickButton(joystick,3);
 	
+	/* TESTED:
+	 * Intake all buttons
+	 * Drivetrain all auto and teleop
+	 * Climber seems to be getting the signal but motor stalls
+	 * PDP current sensing code isn't working
+	 * Indexer works all buttons
+	 */
+	
 	//Attach joystick buttons here
 	public OI() {
-		
+		shooterOn.whenPressed(new ShooterOn());
+		shooterOff.whenPressed(new ShooterOff());
 	}
 	
 	public boolean getShooterOn() {
@@ -102,12 +114,15 @@ public class OI {
 		}
 		
 		public double getThrottle() {
-			return joystick.getRawAxis(RobotMap.throttleAxis);
+			double throttle = -joystick.getRawAxis(RobotMap.throttleAxis);
+			throttle = 0.2*(throttle + 1) + 0.6;
+			return throttle;
 		}
 		
 		public void periodic() {
 		}
 		
 		public void updateDashboard() {
+			SmartDashboard.putNumber("Shooter throttle", getThrottle());
 		}
 }

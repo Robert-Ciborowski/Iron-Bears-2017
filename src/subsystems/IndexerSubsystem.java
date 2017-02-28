@@ -9,7 +9,7 @@ public class IndexerSubsystem extends M_Subsystem{
 	private CANTalon indexerMotor = new CANTalon(RobotMap.indexerCANMotorPort);
 	
 	public IndexerSubsystem() {
-		
+		indexerMotor.setInverted(RobotMap.indexerMotorInverted);
 	}
 	
 	public void init() {

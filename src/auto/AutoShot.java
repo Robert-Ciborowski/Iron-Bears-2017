@@ -11,7 +11,7 @@ public class AutoShot extends CommandGroup {
 	private int secondDistance = 10;
 	private int thirdDistance = 10;
 	
-    public  AutoShot(boolean leftRight) { //if 0 turn left, if 1 turn right
+    public  AutoShot(boolean leftRight) { //if false turn left, if true turn right
     	int angle1 = 0;
     	if(leftRight) {angle1 = 90;}
     	else {angle1 = -90;}
@@ -22,12 +22,12 @@ public class AutoShot extends CommandGroup {
     	
     	Robot.chassisSubsystem.resetGyroHeading();
     	
-    	addSequential(new DriveToDistance(0.4,0,firstDistance));
+    	addSequential(new DriveToDistance(0.2,0,firstDistance));
     	addSequential(new RotateToAngle(angle1,2));
-    	addSequential(new DriveToDistance(0.4,angle1,secondDistance));
+    	addSequential(new DriveToDistance(0.2,angle1,secondDistance));
     	addSequential(new RotateToAngle(angle2,2));
-    	addSequential(new DriveToDistance(0.4,angle2, thirdDistance));
-    	addSequential(new ShooterOn());
-    	addParallel(new IndexerOn());
+    	addSequential(new DriveToDistance(0.2,angle2, thirdDistance));
+    	addParallel(new ShooterOn());
+    	addSequential(new IndexerOn());
     }
 }

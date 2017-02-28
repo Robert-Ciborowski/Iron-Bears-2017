@@ -1,7 +1,6 @@
 package shootercommands;
 
 import org.usfirst.frc.team854.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

@@ -1,13 +1,14 @@
 package subsystems;
 
 import org.usfirst.frc.team854.robot.M_Subsystem;
+import org.usfirst.frc.team854.robot.Robot;
 import org.usfirst.frc.team854.robot.RobotMap;
 
-import climbercommands.ClimberOff;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import teleopdrive.JoystickCommand;
 
 public class ClimberSubsystem extends M_Subsystem{
-	public static final double MAX_CURRENT = 15.0;
 	private Spark climberMotor = new Spark(RobotMap.climberMotorPort);
 	
 	public ClimberSubsystem() {
@@ -27,11 +28,11 @@ public class ClimberSubsystem extends M_Subsystem{
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new ClimberOff());
+		setDefaultCommand(new JoystickCommand());
 	}
 	
 	@Override
 	public void updateDashboard() {
-	}
+			}
 	
 }

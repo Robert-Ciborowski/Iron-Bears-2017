@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import shootercommands.ShooterOff;
 import com.ctre.CANTalon;
 
-public class ShooterSubsystem extends M_Subsystem{
+public class ShooterPIDSubsystem extends M_Subsystem{
 	
 	private CANTalon shooterMotor = new CANTalon(RobotMap.shooterCANMotorPort);
 	private Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoder1, RobotMap.shooterEncoder2);
@@ -26,7 +26,7 @@ public class ShooterSubsystem extends M_Subsystem{
 	ArrayList<M_PIDController> pidControllers = new ArrayList<>();
 	
 	//Motor inversions MUST be declared in the constructor!!!
-    public ShooterSubsystem() {
+    public ShooterPIDSubsystem() {
     	shooterMotor.setInverted(RobotMap.shooterMotorInverted);
     }
     
