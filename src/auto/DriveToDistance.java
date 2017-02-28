@@ -36,8 +36,6 @@ public class DriveToDistance extends AutoGoStraightCommand {
 	protected void initialize() {
 		Robot.chassisSubsystem.resetEncoders();
 		super.initialize();
-
-		//chad
 		if (distanceSetpoint < 0) {
 			setSpeed(speedSetpoint, Direction.BACKWARD);
 		} else {
