@@ -11,7 +11,7 @@ public class AutoShot extends CommandGroup {
 	private int secondDistance = 10;
 	private int thirdDistance = 10;
 	
-    public AutoShot(boolean leftRight) { //if 0 turn left, if 1 turn right
+    public  AutoShot(boolean leftRight) { //if 0 turn left, if 1 turn right
     	int angle1 = 0;
     	if(leftRight) {angle1 = 90;}
     	else {angle1 = -90;}

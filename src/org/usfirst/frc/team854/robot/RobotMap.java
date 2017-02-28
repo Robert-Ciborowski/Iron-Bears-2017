@@ -5,8 +5,6 @@ public class RobotMap {
 	
 	public static int leftMotorPort = 1;
 	public static int rightMotorPort = 0;
-	public static int servo0 = 2;
-	public static int servo1 = 3;
 	public static int intakeMotorPort = 4;
 	public static int climberMotorPort = 5;
 	
@@ -19,10 +17,6 @@ public class RobotMap {
 	public static int rightEncoder2 = 3;
 	public static int shooterEncoder1 = 4;
 	public static int shooterEncoder2 = 5;
-	
-	public static int switch0 = 8;
-	public static int switch1 = 9;
-	
 	
 	public static int gyroPort = 0;
 	
