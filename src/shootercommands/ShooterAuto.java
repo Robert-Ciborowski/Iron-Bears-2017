@@ -1,19 +1,16 @@
-package indexercommands;
+package shootercommands;
 
 import org.usfirst.frc.team854.robot.Robot;
 import org.usfirst.frc.team854.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IndexerOn extends Command {
+public class ShooterAuto extends Command {
 
-    public IndexerOn(double waitTime) {
-    	this.setTimeout(waitTime);
-        requires(Robot.indexerSubsystem);
-        requires(Robot.intakeSubsystem);
+    public ShooterAuto() {
+    	requires(Robot.shooterSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -22,17 +19,17 @@ public class IndexerOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.indexerSubsystem.setIndexerSpeed(RobotMap.indexerSpeed);
-    	Robot.intakeSubsystem.setIntakeSpeed(RobotMap.intakeSpeed);
+    	Robot.shooterSubsystem.setShooterSpeed(RobotMap.shooterSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.shooterSubsystem.shooterOff();
     }
 
     // Called when another command which requires one or more of the same

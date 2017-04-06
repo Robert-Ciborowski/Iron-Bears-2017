@@ -8,7 +8,7 @@ import com.ctre.CANTalon;
 public class OpenLoopShooterSubsystem extends M_Subsystem{
 	
 	private CANTalon shooterMotor = new CANTalon(RobotMap.shooterCANMotorPort);
-	
+
 	//Motor inversions MUST be declared in the constructor!!!
     public OpenLoopShooterSubsystem() {
     	shooterMotor.setInverted(RobotMap.shooterMotorInverted);

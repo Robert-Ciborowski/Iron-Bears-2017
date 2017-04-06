@@ -4,6 +4,7 @@ package org.usfirst.frc.team854.robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,13 +16,13 @@ import auto.AutoShot;
 import auto.AutoSwitch;
 import auto.GoStraightPID;
 import auto.MiddleGearPlace;
-import auto.RotateToAngle;
+import auto.SideGearPlace;
 import subsystems.ChassisSubsystem;
 import subsystems.ClimberSubsystem;
+import subsystems.EncodedShooterSubsystem;
 import subsystems.IndexerSubsystem;
 import subsystems.IntakeSubsystem;
 import subsystems.OpenLoopShooterSubsystem;
-import subsystems.ServoSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,26 +33,25 @@ import subsystems.ServoSubsystem;
  */
 public class Robot extends IterativeRobot {
 	public static final ChassisSubsystem chassisSubsystem = new ChassisSubsystem();
-	public static final OpenLoopShooterSubsystem shooterSubsystem = new OpenLoopShooterSubsystem();
+	public static final EncodedShooterSubsystem shooterSubsystem = new EncodedShooterSubsystem();
 	public static final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 	public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-	public static final ServoSubsystem servoSubsystem = new ServoSubsystem(RobotMap.servo0, RobotMap.servo1);
 	public static OI oi;
 	public static PowerDistributionPanel pdp;
+	private AutoSwitch autoSwitch;
 
 	public static List<M_Subsystem> subsystemList = new ArrayList<M_Subsystem>();
 
-	private AutoSwitch autoSwitch;
-	
 	Command autonomousCommand;
 
 	public void robotInit() {
+		CameraServer.getInstance().startAutomaticCapture("Front camera",0);
 		pdp = new PowerDistributionPanel();
 		oi = new OI();
 
 		autoSwitch = new AutoSwitch(RobotMap.switch0, RobotMap.switch1);
-		
+
 		// Add all the subsystems to the subsystem list.
 		subsystemList.add(chassisSubsystem);
 		subsystemList.add(shooterSubsystem);
@@ -62,6 +62,8 @@ public class Robot extends IterativeRobot {
 		for (M_Subsystem s : subsystemList) {
 			s.init();
 		}
+
+		Robot.chassisSubsystem.setServo(180);
 
 		updateDashboard();
 	}
@@ -80,29 +82,29 @@ public class Robot extends IterativeRobot {
 		
 		switch (autoSwitch.getState()) {
 			case 0:
-				System.out.println("Mode 0");
+				System.out.println("Switch is in state 0.");
 				break;
 			case 1:
-				System.out.println("Mode 1");
+				System.out.println("Switch is in state 1.");
 				break;
 			case 2:
-				System.out.println("Mode 2");
+				System.out.println("Switch is in state 2.");
 				break;
 			case 3:
-				System.out.println("Mode 3");
+				System.out.println("Switch is in state 3.");
 				break;
 			default:
-				System.out.println("How did you even get here?!");
-				break;
+				System.out.println("How did you even get here?");
 		}
 		
+    	Robot.chassisSubsystem.setServo(0);
 		Robot.chassisSubsystem.resetGyroHeading();
-		autonomousCommand = new AutoShot(false);
-
-		Scheduler.getInstance().add(autonomousCommand);
-
-		updateDashboard();
-	}
+    	autonomousCommand = new SideGearPlace(SideGearPlace.Side.LEFT);
+        
+    	Scheduler.getInstance().add(autonomousCommand);
+    	
+        updateDashboard();
+    }
 
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -117,7 +119,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		Robot.chassisSubsystem.setServo(0);
 		updateDashboard();
 	}
 

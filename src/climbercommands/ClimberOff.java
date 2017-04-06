@@ -1,19 +1,15 @@
-package indexercommands;
+package climbercommands;
 
 import org.usfirst.frc.team854.robot.Robot;
-import org.usfirst.frc.team854.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IndexerOn extends Command {
+public class ClimberOff extends Command {
 
-    public IndexerOn(double waitTime) {
-    	this.setTimeout(waitTime);
-        requires(Robot.indexerSubsystem);
-        requires(Robot.intakeSubsystem);
+    public ClimberOff() {
+        requires(Robot.climberSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -22,13 +18,12 @@ public class IndexerOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.indexerSubsystem.setIndexerSpeed(RobotMap.indexerSpeed);
-    	Robot.intakeSubsystem.setIntakeSpeed(RobotMap.intakeSpeed);
+    	Robot.climberSubsystem.setClimberSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true

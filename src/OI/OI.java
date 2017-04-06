@@ -18,20 +18,17 @@ public class OI {
 			 		climberUp = new JoystickButton(joystick,4),
 			 		climberDown = new JoystickButton(joystick,6),
 			 		shooterOn = new JoystickButton(joystick,5),
-			 		shooterOff = new JoystickButton(joystick,3);
-	
-	/* TESTED:
-	 * Intake all buttons
-	 * Drivetrain all auto and teleop
-	 * Climber seems to be getting the signal but motor stalls
-	 * PDP current sensing code isn't working
-	 * Indexer works all buttons
-	 */
+			 		shooterOff = new JoystickButton(joystick,3),
+			 		driveReverse = new JoystickButton(joystick,9);
 	
 	//Attach joystick buttons here
 	public OI() {
 		shooterOn.whenPressed(new ShooterOn());
 		shooterOff.whenPressed(new ShooterOff());
+	}
+	
+	public boolean getDriveReverse() {
+		return driveReverse.get();
 	}
 	
 	public boolean getShooterOn() {

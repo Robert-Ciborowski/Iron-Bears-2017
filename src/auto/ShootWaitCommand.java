@@ -1,4 +1,4 @@
-package indexercommands;
+package auto;
 
 import org.usfirst.frc.team854.robot.Robot;
 import org.usfirst.frc.team854.robot.RobotMap;
@@ -8,12 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IndexerOn extends Command {
+public class ShootWaitCommand extends Command {
 
-    public IndexerOn(double waitTime) {
-    	this.setTimeout(waitTime);
-        requires(Robot.indexerSubsystem);
-        requires(Robot.intakeSubsystem);
+    public ShootWaitCommand(double waitTime) {
+        this.setTimeout(waitTime);
+        requires(Robot.shooterSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +21,7 @@ public class IndexerOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.indexerSubsystem.setIndexerSpeed(RobotMap.indexerSpeed);
-    	Robot.intakeSubsystem.setIntakeSpeed(RobotMap.intakeSpeed);
+    	Robot.shooterSubsystem.setShooterSpeed(RobotMap.shooterSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,6 +36,5 @@ public class IndexerOn extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
